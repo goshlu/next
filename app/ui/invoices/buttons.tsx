@@ -1,5 +1,8 @@
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { deleteInvoice } from '@/app/lib/actions';
+import React from 'react';
+
 
 export function CreateInvoice() {
   return (
@@ -16,7 +19,7 @@ export function CreateInvoice() {
 export function UpdateInvoice({ id }: { id: string }) {
   return (
     <Link
-      href="/dashboard/invoices"
+      href={`/dashboard/invoices/${id}/edit`}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
@@ -25,12 +28,26 @@ export function UpdateInvoice({ id }: { id: string }) {
 }
 
 export function DeleteInvoice({ id }: { id: string }) {
+  // 添加删除前的提示？
+  // // 处理表单提交事件
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault(); // 阻止表单默认提交行为
+
+  //   // 显示确认对话框
+  //   const isConfirmed = window.confirm("确定要删除这个发票吗？");
+  //   if (isConfirmed) {
+  //     // 如果用户确认，执行删除操作
+  //     deleteInvoice(id);
+  //   }
+  // };
+  
+  const deleteInvoiceWithId = deleteInvoice.bind(null, id);
   return (
-    <>
+    <form action={deleteInvoiceWithId}>
       <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
+        <TrashIcon className="w-4" />
       </button>
-    </>
+    </form>
   );
 }
